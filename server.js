@@ -39,12 +39,12 @@ app.post('/htmltoimage', async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--lang=en-US,en']
     });
     const page = await browser.newPage();
     await page.setViewport({ width, height });
     //networkidle0: no response within 500ms
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+    await page.setContent(`<head><meta charset='UTF-8'>${html}</head>`, { waitUntil: 'networkidle0' });
     const screenshotBuffer = await page.screenshot({ type: 'png' });
     await browser.close();
 

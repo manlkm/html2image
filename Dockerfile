@@ -1,7 +1,11 @@
 FROM node:18-slim
 
-# 安裝 Chromium 依賴
+# Install chromium dependencies
 RUN apt-get update && apt-get install -y \
+    fonts-noto \
+    fonts-noto-cjk \
+    fonts-noto-cjk-extra \
+    fonts-noto-color-emoji \
   gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
   libexpat1 libfontconfig1 libgcc1 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 \
   libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 \
@@ -11,14 +15,13 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 COPY package.json package-lock.json ./
-ENV PUPPETEER_CACHE_DIR=/opt/render/.cache/puppeteer
-ENV PUPPETEER_EXECUTABLE_PATH=/opt/render/.cache/puppeteer/chrome/linux-139.0.7258.154/chrome-linux64/chrome
 
 RUN npm install --production
 RUN npx puppeteer browsers install chrome
 
 COPY server.js ./
 
+ENV LANG=C.UTF-8
 EXPOSE 3000
 
 CMD ["node", "server.js"]

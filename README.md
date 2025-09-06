@@ -17,6 +17,8 @@ A Node.js + Express + Puppeteer based HTML to image conversion API service.
 1. **Build Docker Image**
    ```bash
    docker build -t html2image .
+   # platform-specific build
+   docker build --platform linux/amd64 -t html2image .
    ```
 
 2. **Run Container**
