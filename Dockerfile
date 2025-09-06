@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 COPY package.json package-lock.json ./
+ENV PUPPETEER_CACHE_DIR=/opt/render/.cache/puppeteer
+ENV PUPPETEER_EXECUTABLE_PATH=/opt/render/.cache/puppeteer/chrome/linux-139.0.7258.154/chrome-linux64/chrome
+
 RUN npm install --production
 RUN npx puppeteer browsers install chrome
 
